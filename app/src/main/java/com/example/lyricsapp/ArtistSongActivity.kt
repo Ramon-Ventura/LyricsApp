@@ -55,7 +55,7 @@ class ArtistSongActivity : AppCompatActivity() {
             httpVolley(getUrlApi(artist,track))
         } else {
             progressDialog.dismiss()
-            Toast.makeText(this, "¡No tienes conexión a Internet!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "¡No internet connection!", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -77,7 +77,7 @@ class ArtistSongActivity : AppCompatActivity() {
             },
             Response.ErrorListener {
                 progressDialog.dismiss()
-                Log.d("HTTPVolley", "Error en la URL $url")
+                Log.d("HTTPVolley", "Error in URL $url")
                 showDialogNull()
             })
 
