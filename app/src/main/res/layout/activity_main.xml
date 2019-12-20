@@ -31,6 +31,14 @@
             android:layout_margin="20dp"
             android:text="Search Lyric by Artist and Song"
             style="@style/Widget.AppCompat.Button.Colored"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonPopularSong"
+            app:layout_constraintTop_toBottomOf="@id/buttonArtistSong"
+            android:layout_margin="20dp"
+            android:text="Popular Songs"
+            style="@style/Widget.AppCompat.Button.Colored"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

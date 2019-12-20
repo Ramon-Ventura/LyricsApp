@@ -24,9 +24,10 @@ class MainActivity : AppCompatActivity() {
 
         buttonArtistSong.setOnClickListener {
             startActivity(Intent(this,ArtistSongActivity::class.java))
-            finish()
         }
-
+        buttonPopularSong.setOnClickListener {
+            startActivity(Intent(this,PopularSongsActivity::class.java))
+        }
     }
 
 }

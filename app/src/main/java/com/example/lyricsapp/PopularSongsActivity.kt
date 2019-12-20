@@ -5,48 +5,70 @@ package com.example.lyricsapp
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
-import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.lyricsapp.apiresponse.ApiResponse
+import com.example.lyricsapp.interfaces.ClickListener
+import com.example.lyricsapp.recycledata.Popular
+import com.example.lyricsapp.recycledata.PopularAdapter
 import com.google.gson.Gson
 
-class ArtistSongActivity : AppCompatActivity() {
-    private lateinit var btnLyric: Button
-    private lateinit var etArtist: EditText
-    private lateinit var etTrack: EditText
+class PopularSongsActivity : AppCompatActivity() {
+    private lateinit var gArtist: String
+    private  lateinit var  gSong: String
+
+    var populares: ArrayList<Popular>? = null
+
+    var mylist: RecyclerView? = null
+    var layoutManager:RecyclerView.LayoutManager? = null
+    var adapter: PopularAdapter? = null
     private lateinit var  progressDialog : ProgressDialog
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_artist_song)
+        setContentView(R.layout.activity_popular_songs)
 
-        //init
-        btnLyric = findViewById(R.id.buttonSearch)
-        etArtist = findViewById(R.id.editTextArtist)
-        etTrack = findViewById(R.id.editTextTrack)
         progressDialog = ProgressDialog(this)
         progressDialog.setMessage("Searching Lyric...")
 
         //Action bar and title
-        supportActionBar?.title = "Search Lyric"
+        supportActionBar?.title = "Popular Songs"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        //Search button listener
-        btnLyric.setOnClickListener {
-            if(etArtist.length()==0 || etTrack.length()==0){
-                showDialogEmpty()
-            }else{
-                showDialog()
+        //Populars List
+        populares = ArrayList()
+        populares?.add(Popular(R.drawable.ride_the_lightning,"Metallica","Ride the Lightning","Fade to black"))
+        populares?.add(Popular(R.drawable.master_of_puppets,"Metallica","Master of Puppets","Master of Puppets"))
+        populares?.add(Popular(R.drawable.metallica,"Metallica","Metallica","Enter Sandman"))
+        populares?.add(Popular(R.drawable.fear_of_the_dark,"Iron Maiden","Fear of the Dark","Fear of the Dark"))
+        populares?.add(Popular(R.drawable.a_night_at_the_opera,"Queen","A Night At The Opera","Bohemian Rhapsody"))
+
+        mylist = findViewById(R.id.lista)
+        layoutManager = LinearLayoutManager(this)
+        adapter = PopularAdapter(populares!!,object :ClickListener{
+            override fun onClick(view: View, position: Int) {
+                gArtist = populares?.get(position)?.artist!!
+                gSong = populares?.get(position)?.song!!
+                verifyAndConnect(gArtist,gSong)
             }
-        }
+        })
+        mylist?.layoutManager = layoutManager
+        mylist?.adapter = adapter
+
     }
 
     private fun verifyAndConnect(artist : String, track : String) {
@@ -92,73 +114,14 @@ class ArtistSongActivity : AppCompatActivity() {
         if(apiResponse.lyrics!=null){
             val intent = Intent(this,LyricActivity::class.java)
             intent.putExtra("Lyric",apiResponse.lyrics)
-            intent.putExtra("Artist",etArtist.text.toString().trim())
-            intent.putExtra("Song",etTrack.text.toString().trim())
+            intent.putExtra("Artist",gArtist)
+            intent.putExtra("Song",gSong)
             progressDialog.dismiss()
             startActivity(intent)
         }else{
             showDialogNull()
         }
 
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return super.onSupportNavigateUp()
-    }
-
-    private fun showDialog(){
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("CONFIRM")
-        //LinearLayout
-        val linearLayout = LinearLayout(this)
-        linearLayout.orientation=LinearLayout.VERTICAL
-
-        //Views to dialog
-        val artist = TextView(this)
-        artist.setTextSize(TypedValue.COMPLEX_UNIT_SP,20.0f)
-        artist.text = getString(R.string.dialog_text_view_artist,etArtist.text.toString().trim())
-        val song = TextView(this)
-        song.setTextSize(TypedValue.COMPLEX_UNIT_SP,20.0f)
-        song.text = getString(R.string.dialog_text_view_song,etTrack.text.toString().trim())
-        linearLayout.addView(artist)
-        linearLayout.addView(song)
-        linearLayout.setPadding(10,10,10,10)
-
-        builder.setView(linearLayout)
-
-        //Buttons recover
-        builder.setPositiveButton("Continue"){ _, _ ->
-            verifyAndConnect(etArtist.text.toString().trim(),etTrack.text.toString().trim())
-        }
-        //Button Recover
-        builder.setNegativeButton("Cancel"){ dialog, _ ->
-            dialog.dismiss()
-        }
-        //Show dialog
-        builder.create().show()
-    }
-
-    private fun showDialogEmpty(){
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("DATA MISSING!")
-        //LinearLayout
-        val linearLayout = LinearLayout(this)
-
-        //Views to dialog
-        val alert = TextView(this)
-        alert.setTextSize(TypedValue.COMPLEX_UNIT_SP,20.0f)
-        alert.text = getString(R.string.alert_text_empty)
-        linearLayout.addView(alert)
-        linearLayout.setPadding(10,10,10,10)
-        builder.setView(linearLayout)
-
-        //Continue button
-        builder.setPositiveButton("Continue"){ dialog, _ ->
-            dialog.dismiss()
-        }
-        //Show dialog
-        builder.create().show()
     }
 
     private fun showDialogNull(){
@@ -181,5 +144,9 @@ class ArtistSongActivity : AppCompatActivity() {
         }
         //Show dialog
         builder.create().show()
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
     }
 }

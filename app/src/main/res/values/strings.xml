@@ -1,7 +1,15 @@
 <resources>
     <string name="app_name">LyricsApp</string>
     <string name="text_view_info_lyric">%1$s - %2$s</string>
-
+    <!--Strings for dialogs-->
     <string name="dialog_text_view_artist">Artist: %1$s</string>
     <string name="dialog_text_view_song">Song: %1$s</string>
+    <!--Strings for the recycle viewer-->
+    <string name="text_view_recycle_artist">Artist: %1$s</string>
+    <string name="text_view_recycle_album">Album: %1$s</string>
+    <string name="text_view_recycle_song">Song: %1$s</string>
+
+    <string name="alert_text_null">We didn\'t find a lyric for that song and artist</string>
+    <string name="alert_text_empty">Artist or Song value is missing, be sure to insert the necessary data</string>
+
 </resources>

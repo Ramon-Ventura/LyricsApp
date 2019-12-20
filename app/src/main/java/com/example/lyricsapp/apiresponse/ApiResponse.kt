@@ -1,9 +1,9 @@
 package com.example.lyricsapp.apiresponse
 
-class ApiResponse (result: Result) {
-    var result: Result? = null
+class ApiResponse (lyrics: String) {
+    var lyrics: String? = ""
     //Initialize properties
     init {
-        this.result = result
+        this.lyrics = lyrics
     }
 }
