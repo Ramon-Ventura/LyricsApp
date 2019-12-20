@@ -1,11 +1,12 @@
 package com.example.lyricsapp.apiresponse
 
-class Result(lyrics: String, source: Source) {
-    var lyrics: String? = ""
-    var source: Source? = null
-    //Initialize variable
+class Result(artist: Artist,track: Track, copyright: Copyright) {
+    var artist: Artist? = null
+    var track: Track? = null
+    var copyright: Copyright? = null
     init {
-        this.lyrics = lyrics
-        this.source = source
+        this.artist = artist
+        this.track = track
+        this.copyright = copyright
     }
 }

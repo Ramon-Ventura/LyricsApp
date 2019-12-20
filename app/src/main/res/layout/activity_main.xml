@@ -6,51 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
-    <!--Artist Name-->
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textInputLayoutArtist"
+    <!--LOGO-->
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:id="@+id/imageViewLogo"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="20dp">
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editTextArtist"
-            android:inputType="textEmailAddress"
-            android:hint="Artist" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!--Track Name-->
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textInputLayoutTrack"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayoutArtist"
-        android:layout_marginTop="20dp">
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editTextTrack"
-            android:inputType="text"
-            android:hint="Track" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!--SHOW LYRIC-->
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonSearch"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayoutTrack"
-        android:text="Search"
-        style="@style/Widget.AppCompat.Button.Colored"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/logo"
+        android:layout_marginTop="50dp"
         />
-
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewLyric"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSearch"
-        android:text="HELLO"/>
+        app:layout_constraintTop_toBottomOf="@id/imageViewLogo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonArtistSong"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="20dp"
+            android:text="Search Lyric by Artist and Song"
+            style="@style/Widget.AppCompat.Button.Colored"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
